@@ -1,4 +1,10 @@
+package br.ufpb.dcx.torneio.system;
+
+import br.ufpb.dcx.torneio.entitie.Equipe;
+import br.ufpb.dcx.torneio.entitie.Jogador;
+
 import java.io.IOException;
+import java.util.List;
 
 public interface SistemaTorneio {
      public List<Jogador> iniciarSistema() throws IOException;
@@ -10,17 +16,7 @@ public interface SistemaTorneio {
 
     public boolean criarNovaEquipe(String nomeEquipe) throws Exception; //especificar exceção
     public boolean adicionaAEquipe(Equipe equipe) throws Exception; //especificar exceção
-    public boolean removerDoTime(Jogador jogador, Equipe equipe) throws Exception; //especificar exceção
+    public boolean removerDaEquipe(Jogador jogador, Equipe equipe) throws Exception; //especificar exceção
     public Jogador pesquisarJogadorPorNick(String nickname) throws  Exception; //especificar exceção
     public Jogador pesquisarJogadorPorNomeDaPessoa(String nomeDaPessoa) throws Exception; //especificar exceção
-
-
-
-
-
-
-
-
-
-
 }
