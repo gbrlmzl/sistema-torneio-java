@@ -2,23 +2,39 @@ package br.ufpb.dcx.torneio.system;
 
 import br.ufpb.dcx.torneio.entitie.Equipe;
 import br.ufpb.dcx.torneio.entitie.Jogador;
+import br.ufpb.dcx.torneio.gravador.Gravador;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SistemaGerenciaTorneio implements SistemaTorneio{
-    //private Map<String,Equipe> mapEquipes;    repensar de ter apenas equipes aqui;
+public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
+    private Map<String, Object> equipes;
+    private Map<String, Object> jogadores;
 
-    @Override
-    public List<Jogador> iniciarSistema() throws IOException {
-        return List.of();
+    private static final String fileNameEquipes = "equipes.dat";
+    private static final String fileNameJogadores = "jogadores.dat";
+
+    private Gravador gravador;
+
+    public SistemaTorneioLOL(){
+        this.equipes = new HashMap<String, Object>();
+        this.jogadores = new HashMap<String, Object>();
+        this.gravador = new Gravador();
     }
 
     @Override
-    public void finalizarSistema(List<Jogador> listaJogadores) throws IOException {
+    public void iniciarSistema() throws IOException {
+        equipes = gravador.recarrega(fileNameEquipes);
+        jogadores = gravador.recarrega(fileNameJogadores);
+    }
 
+    @Override
+    public void finalizarSistema() throws IOException {
+        gravador.save(equipes, fileNameEquipes);
+        gravador.save(jogadores, fileNameJogadores);
     }
 
     @Override
@@ -57,7 +73,7 @@ public class SistemaGerenciaTorneio implements SistemaTorneio{
     }
 
     @Override
-    public Jogador pesquisarJogadorPorNomeDaPessoa(String nomeDaPessoa) throws Exception {
+    public Equipe pesquisarEquipePeloNome(String nomeDaEquipe) throws Exception {
         return null;
     }
 }
