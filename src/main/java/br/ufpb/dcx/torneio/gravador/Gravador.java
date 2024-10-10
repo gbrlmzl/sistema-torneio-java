@@ -18,7 +18,7 @@ public class Gravador {
     public Map<String, Object> recarrega(String fileName) {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (Map<Integer, Object>) ois.readObject();
+            return (Map<String, Object>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException();
         }

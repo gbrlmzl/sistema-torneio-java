@@ -1,16 +1,10 @@
 package br.ufpb.dcx.torneio.GUI;
 
-import br.ufpb.dcx.torneio.Controller.SistemaTorneioCadastrarJogadorController;
-import br.ufpb.dcx.torneio.Controller.SistemaTorneioCriarNovaEquipeController;
-import br.ufpb.dcx.torneio.entitie.Equipe;
-import br.ufpb.dcx.torneio.entitie.Jogador;
+import br.ufpb.dcx.torneio.Controller.*;
 import br.ufpb.dcx.torneio.system.SistemaTorneioLOL;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SistemaTorneioGUI extends JFrame{
 
@@ -27,21 +21,61 @@ public class SistemaTorneioGUI extends JFrame{
 
         add(new JLabel());
         JMenu menuJogador = new JMenu("Jogador");
-        JMenuItem cadastrarJogador = new JMenuItem("Cadastrar Jogador");
+
+        JMenuItem cadastrarJogador = new JMenuItem("Cadastrar jogador(a)");
+        JMenuItem removerJogador = new JMenuItem("Remover jogador(a)");
         menuJogador.add(cadastrarJogador);
+        menuJogador.add(removerJogador);
+
 
         JMenu menuEquipe = new JMenu("Equipe");
-        JMenuItem cadastrarEquipe = new JMenuItem("Cadastrar Equipe");
-        menuEquipe.add(cadastrarEquipe);
 
-        //adicionando as ações
+        JMenuItem criarEquipe = new JMenuItem("Criar equipe");
+        JMenuItem removerMembro = new JMenuItem("Remover membro da equipe");
+        JMenuItem adicionarMembro = new JMenuItem("Adicionar membro a equipe");
+        menuEquipe.add(criarEquipe);
+        menuEquipe.add(removerMembro);
+        menuEquipe.add(adicionarMembro);
+
+
+        JMenu menuPesquisa = new JMenu("Pesquisa");
+
+        JMenuItem pesquisarEquipe = new JMenuItem("Pesquisar equipe");
+        JMenuItem pesquisarTodosJogadores = new JMenuItem("Pesquisar todos jogadores");
+        JMenuItem pesquisarJogador = new JMenuItem("Pesquisar jogador(a)");
+        menuPesquisa.add(pesquisarJogador);
+        menuPesquisa.add(pesquisarEquipe);
+        menuPesquisa.add(pesquisarTodosJogadores);
+
+
+
+        //adicionando as ações do menu Jogador
         cadastrarJogador.addActionListener(new SistemaTorneioCadastrarJogadorController(sistema, this));
+        removerJogador.addActionListener(new SistemaTorneioRemoverJogadorController(sistema, this));
 
-        cadastrarEquipe.addActionListener(new SistemaTorneioCriarNovaEquipeController(sistema, this));
+
+        //adicionando as ações do menu Equipe
+        criarEquipe.addActionListener(new SistemaTorneioCriarNovaEquipeController(sistema, this));
+        removerMembro.addActionListener(new SistemaTorneioRemoverDaEquipeController(sistema, this));
+        adicionarMembro.addActionListener(new SistemaTorneioAdicionarAEquipeController(sistema, this));
+
+        //adicionando as ações do menu pesquisa
+        pesquisarEquipe.addActionListener(new SistemaTorneioPesquisarEquipePeloNomeController(sistema, this));
+        pesquisarJogador.addActionListener(new SistemaTorneioPesquisarJogadorPorNickController(sistema, this));
+        pesquisarTodosJogadores.addActionListener(new SistemaTorneioListaJogadoresController(sistema, this));
+
 
         //adicionando opções na barra de menu
         barraMenu.add(menuJogador);
         barraMenu.add(menuEquipe);
+        barraMenu.add(menuPesquisa);
+        setJMenuBar(barraMenu);
+    }
+
+    public static void main(String[]args){
+        JFrame janela = new SistemaTorneioGUI();
+        janela.setVisible(true);
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     
