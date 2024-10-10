@@ -7,19 +7,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SistemaTorneioGUI extends JFrame{
-
-    SistemaTorneioLOL sistema= new SistemaTorneioLOL();
+    ImageIcon menuPrincipalImg = new ImageIcon("imgs/menuPrincipal.png");
+    SistemaTorneioLOL sistema = new SistemaTorneioLOL();
     JMenuBar barraMenu = new JMenuBar();
 
     public SistemaTorneioGUI(){
         setTitle("Torneio");
 
-        setSize(1100, 600);
+        setSize(1100, 499);
         setLocation(150, 150);
         setResizable(false);
         setBackground(Color.lightGray);
 
+
         add(new JLabel());
+        JLabel planoDeFundoMenuPrincipal = new JLabel(menuPrincipalImg, JLabel.CENTER);
+        getContentPane().add(planoDeFundoMenuPrincipal);
         JMenu menuJogador = new JMenu("Jogador");
 
         JMenuItem cadastrarJogador = new JMenuItem("Cadastrar jogador(a)");
