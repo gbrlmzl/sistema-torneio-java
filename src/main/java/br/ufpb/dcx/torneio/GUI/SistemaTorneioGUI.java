@@ -26,6 +26,7 @@ public class SistemaTorneioGUI extends JFrame{
         JMenuItem removerJogador = new JMenuItem("Remover jogador(a)");
         menuJogador.add(cadastrarJogador);
         menuJogador.add(removerJogador);
+        //TODO
 
 
         JMenu menuEquipe = new JMenu("Equipe");
