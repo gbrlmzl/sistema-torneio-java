@@ -1,16 +1,28 @@
 package br.ufpb.dcx.torneio.entitie;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Equipe {
-    private String nomeDaEquipe;
+
+public class Equipe implements Serializable {
+
+
+    private String nomeDaEquipe;                     //Chave
     private List<Jogador> listaJogadores;
+    private Integer pontuacao;
 
     public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores){
         this.nomeDaEquipe = nomeDaEquipe;
         this.listaJogadores= listaJogadores;
-    }
+        this.pontuacao = 0;
+    }//Construtor de Equipe COM geração de tag
+
+    public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores, Integer pontuacao) {
+        this.nomeDaEquipe = nomeDaEquipe;
+        this.listaJogadores = listaJogadores;
+        this.pontuacao = pontuacao;
+    }//Construtor de Equipes SEM geração de tag
 
     @Override
     public boolean equals(Object o) {
@@ -19,6 +31,7 @@ public class Equipe {
         Equipe equipe = (Equipe) o;
         return Objects.equals(nomeDaEquipe, equipe.nomeDaEquipe);
     }
+
 
     @Override
     public int hashCode() {
@@ -39,5 +52,13 @@ public class Equipe {
 
     public void setNomeDaEquipe(String nomeDaEquipe) {
         this.nomeDaEquipe = nomeDaEquipe;
+    }
+
+    public Integer getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(Integer pontuacao) {
+        this.pontuacao = pontuacao;
     }
 }

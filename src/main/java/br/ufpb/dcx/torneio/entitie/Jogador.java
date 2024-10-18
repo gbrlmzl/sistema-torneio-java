@@ -1,17 +1,61 @@
 package br.ufpb.dcx.torneio.entitie;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Jogador {
+class TagJogador{
+    private static int contador = 0;
+    private final int id;
+
+    public TagJogador(){
+        this.id = ++contador;
+    }
+
+    @Override
+    public String toString(){
+        return "#" + id;
+    }
+}
+
+
+public class Jogador implements Serializable {
+
     private String nickName;
-    private String elo; //verificar se fica melhor ser um int, ao inves de ser o nome do elo
-                        //ou a pontuação do elo dele logo de cara
 
-    private String nomeEquipe; //verificar se isso é necessário ou não
+    private ELOS elo;
 
-    public Jogador(String nickName, String elo){
+    private String tagJogador;      //Chave
+
+    private Equipe equipe;
+
+    public Jogador(String nickName, ELOS elo, Equipe equipe){
         this.nickName = nickName;
         this.elo = elo;
+        this.equipe = equipe;
+        this.tagJogador = new TagJogador().toString();
+    }//Construtor de Jogador com equipe COM geração de tag
+
+    public Jogador(String nickName, ELOS elo, Equipe equipe, String tagJogador){
+        this.nickName = nickName;
+        this.elo = elo;
+        this.equipe = equipe;
+        this.tagJogador = tagJogador;
+    }//Construtor de jogador com equipe SEM geração de tag
+
+    public Jogador(String nickName, ELOS elo, String tagJogador){
+        this.nickName = nickName;
+        this.elo = elo;
+        this.tagJogador = tagJogador;
+    }//Construtor de Jogador sem equipe SEM geração de tag
+
+    public Jogador(String nickName, ELOS elo){
+        this.nickName = nickName;
+        this.elo = elo;
+        this.tagJogador = new TagJogador().toString();
+    }//Construtor de Jogador sem equipe COM geração de tag
+
+    public Jogador() {
+        this("",null,null,null);
     }
 
     @Override
@@ -27,12 +71,28 @@ public class Jogador {
         return Objects.hashCode(nickName);
     }
 
-    public String getElo() {
+    public ELOS getElo() {
         return elo;
     }
 
-    public void setElo(String elo) {
+    public void setElo(ELOS elo) {
         this.elo = elo;
+    }
+
+    public String getTag() {
+        return tagJogador;
+    }
+
+    public void setTagJogador(String tag) {
+        this.tagJogador = tag;
+    }
+
+    public Equipe getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
 
     public String getNickName() {
@@ -43,11 +103,4 @@ public class Jogador {
         this.nickName = nickName;
     }
 
-    public String getNomeEquipe() {
-        return nomeEquipe;
-    }
-
-    public void setNomeEquipe(String nomeEquipe) {
-        this.nomeEquipe = nomeEquipe;
-    }
 }
