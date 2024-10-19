@@ -12,17 +12,24 @@ public class Equipe implements Serializable {
     private List<Jogador> listaJogadores;
     private Integer pontuacao;
 
+    public Equipe(String nomeDaEquipe) {
+        this.nomeDaEquipe = nomeDaEquipe;
+    }
+
     public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores){
         this.nomeDaEquipe = nomeDaEquipe;
         this.listaJogadores= listaJogadores;
         this.pontuacao = 0;
-    }//Construtor de Equipe COM geração de tag
+    }
 
     public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores, Integer pontuacao) {
         this.nomeDaEquipe = nomeDaEquipe;
         this.listaJogadores = listaJogadores;
         this.pontuacao = pontuacao;
-    }//Construtor de Equipes SEM geração de tag
+    }
+
+    public Equipe() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -42,10 +49,6 @@ public class Equipe implements Serializable {
         return listaJogadores;
     }
 
-    public void setListaJogadores(List<Jogador> listaJogadores) {
-        this.listaJogadores = listaJogadores;
-    }
-
     public String getNomeDaEquipe() {
         return nomeDaEquipe;
     }
@@ -60,5 +63,26 @@ public class Equipe implements Serializable {
 
     public void setPontuacao(Integer pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public boolean estaCheia(){
+        return listaJogadores.size() == 5;
+    }
+
+    public void adicionaJogador(Jogador jogador){
+        this.listaJogadores.add(jogador);
+    }
+
+    public void removeJogador(Jogador jogador){
+        this.listaJogadores.remove(jogador);
+    }
+
+    public boolean verificaJogador(Jogador jogador){
+        return listaJogadores.contains(jogador);
+    }
+
+    public String toString(){
+        return """
+                """;
     }
 }

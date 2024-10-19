@@ -5,6 +5,7 @@ import br.ufpb.dcx.torneio.entitie.Equipe;
 import br.ufpb.dcx.torneio.entitie.Jogador;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public interface InterfaceSistemaTorneio {
@@ -32,12 +33,12 @@ public interface InterfaceSistemaTorneio {
      * @param tag recebe uma Tag de um Jogador para remove-lo
      * @throws Exception caso não encontre o jogador com essa tag
      */
-     public void removerJogador(String tag) throws Exception; //decidir o quais parametros e quais exceções
+     public void removerJogador(String tag) throws Exception;
 
     /**
      * @return retorna uma lista contendo todos os Jogadores
      */
-     public List<Jogador> listaJogadores(); //dispara alguma exceção?
+     public Collection<Jogador> listaJogadores() throws Exception; //dispara alguma exceção?
 
     /**
      *
@@ -49,20 +50,25 @@ public interface InterfaceSistemaTorneio {
 
     /**
      *
-     * @param equipe Equipe que vai receber o Jogador
-     * @param jogador que vai entrar para a equipe
+     * @param nomeDaEquipe Equipe que vai receber o Jogador
+     * @param tag do jogador que será pesquisado
      * @throws Exception caso a Equipe não exista // Caso o Jogador Não exista // Caso a Equipe esteja cheia //  Caso o jogador já tenha Equipe
      */
-    public void adicionaAEquipe(Equipe equipe, Jogador jogador) throws Exception;
+    public void adicionaJogadorAEquipe(String nomeDaEquipe, String tag) throws Exception;
 
     /**
      *
-     * @param tag do jogador que vai ser removido
-     * @param equipe que vai perder o jogador
+     * @param tagJogador do jogador que vai ser removido
+     * @param nomeDaEquipe que vai perder o jogador
      * @throws Exception caso jogador não exista para essa tag(pesquisarPorTag) // caso a equipe não exista // caso o jogador não esteja na equipe
      */
-    public void removerDaEquipe(String tag, Equipe equipe) throws Exception; //especificar exceção
+    public void removerDaEquipe(String tagJogador, String nomeDaEquipe) throws Exception; //especificar exceção
 
+    /**
+     *
+     * @throws Exception caso esteja vazia
+     */
+    public Collection<Equipe> listaEquipes() throws Exception;
     /**
      *
      * @param tag do jogador
@@ -70,14 +76,6 @@ public interface InterfaceSistemaTorneio {
      * @throws Exception caso o jogador não exista
      */
     public Jogador pesquisarJogadorPorTag(String tag) throws Exception;
-
-    /**
-     *
-     * @param nickname nick do jogador
-     * @return lista de jogadores que têm esse nick com suas tags
-     * @throws Exception caso o nickname não exista
-     */
-    public List<Jogador> pesquisarJogadorPorNick(String nickname) throws  Exception; //especificar exceção
 
     /**
      *

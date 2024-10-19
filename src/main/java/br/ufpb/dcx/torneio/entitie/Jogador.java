@@ -63,12 +63,12 @@ public class Jogador implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jogador jogador = (Jogador) o;
-        return Objects.equals(nickName, jogador.nickName);
+        return Objects.equals(tagJogador, jogador.tagJogador);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(nickName);
+        return Objects.hashCode(tagJogador);
     }
 
     public ELOS getElo() {
@@ -101,6 +101,14 @@ public class Jogador implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public boolean temEquipe(){
+        return equipe != null;
+    }
+
+    public String toString(){
+        return "";
     }
 
 }
