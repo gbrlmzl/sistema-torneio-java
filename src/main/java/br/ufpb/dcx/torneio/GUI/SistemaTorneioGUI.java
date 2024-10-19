@@ -2,15 +2,10 @@ package br.ufpb.dcx.torneio.GUI;
 
 import br.ufpb.dcx.torneio.Controller.SistemaTorneioCadastrarJogadorController;
 import br.ufpb.dcx.torneio.Controller.SistemaTorneioCriarNovaEquipeController;
-import br.ufpb.dcx.torneio.entitie.Equipe;
-import br.ufpb.dcx.torneio.entitie.Jogador;
-import br.ufpb.dcx.torneio.system.SistemaTorneioLOL;
+import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SistemaTorneioGUI extends JFrame{
 

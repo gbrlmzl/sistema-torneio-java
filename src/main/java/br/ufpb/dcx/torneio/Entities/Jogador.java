@@ -1,21 +1,8 @@
-package br.ufpb.dcx.torneio.entitie;
+package br.ufpb.dcx.torneio.Entities;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-class TagJogador{
-    private static int contador = 0;
-    private final int id;
-
-    public TagJogador(){
-        this.id = ++contador;
-    }
-
-    @Override
-    public String toString(){
-        return "#" + id;
-    }
-}
 
 
 public class Jogador implements Serializable {

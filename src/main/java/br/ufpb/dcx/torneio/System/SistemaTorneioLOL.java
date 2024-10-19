@@ -1,9 +1,9 @@
-package br.ufpb.dcx.torneio.system;
+package br.ufpb.dcx.torneio.System;
 
-import br.ufpb.dcx.torneio.entitie.ELOS;
-import br.ufpb.dcx.torneio.entitie.Equipe;
-import br.ufpb.dcx.torneio.entitie.Jogador;
-import br.ufpb.dcx.torneio.gravador.Gravador;
+import br.ufpb.dcx.torneio.Exception.*;
+import br.ufpb.dcx.torneio.Entities.Equipe;
+import br.ufpb.dcx.torneio.Entities.Jogador;
+import br.ufpb.dcx.torneio.Gravador.Gravador;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -43,28 +43,28 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
     }
 
     @Override
-    public void cadastrarJogador(Jogador jogador) throws Exception {
+    public void cadastrarJogador(Jogador jogador) throws JogadorJaExisteException, ObjetoNuloException {
         if (jogador == null)
-            throw new NullPointerException();
+            throw new ObjetoNuloException("Jogador nulo");
         else if (jogadores.containsValue(jogador))
-            throw new Exception("Jogador Ja cadastrado");
+            throw new JogadorJaExisteException("Jogador já existe");
         jogadores.put(jogador.getTag(), jogador);       //Lembrar de no main fazer a separação dos construtores
         JOptionPane.showMessageDialog(null, "Jogador" + ANSI_RED + jogador.getTag() + jogador.getNickName() + ANSI_RESET + " cadastrado com sucesso!");
     }
 
     @Override
-    public void removerJogador(String tag) throws Exception {
+    public void removerJogador(String tag) throws ObjetoNuloException {
         Jogador jogador =  jogadores.get(tag);
         if (jogador == null)
-            throw new NullPointerException();
+            throw new ObjetoNuloException("Jogador nulo");
         jogadores.remove(tag);
         JOptionPane.showMessageDialog(null, "Jogador " + ANSI_RED + jogador.getTag() + jogador.getNickName() + ANSI_RESET + " removido!");
     }
 
     @Override
-    public Collection<Jogador> listaJogadores() throws Exception {
+    public Collection<Jogador> listaJogadores() throws JogadorNaoEncontradoException {
         if (jogadores.isEmpty()) {
-            throw new NullPointerException("Nenhum jogador cadastrado.");
+            throw new JogadorNaoEncontradoException("Jogador não encontrado");
         }
 
         return jogadores.entrySet().stream()
@@ -75,33 +75,33 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
 
     @Override
-    public void criarNovaEquipe(String nomeEquipe) throws Exception {
+    public void criarNovaEquipe(String nomeEquipe) throws EquipeJaExisteException {
         if (!equipes.containsKey(nomeEquipe.toUpperCase()))
-            throw new NullPointerException("Equipe com este nome já existe");   //Equipe com esse nome já Existe
+            throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
         equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
         JOptionPane.showMessageDialog(null, "Equipe criada " + ANSI_BLUE + nomeEquipe + ANSI_RESET + "com sucesso!");
     }
 
     @Override
-    public void adicionaJogadorAEquipe(String nomeDaEquipe, String tagJogador) throws Exception {
+    public void adicionaJogadorAEquipe(String nomeDaEquipe, String tagJogador) throws JogadorJaTemEquipeException, EquipeCheiaException, JogadorNaoEncontradoException, EquipeNaoEncontradaException {
         Jogador jogador = pesquisarJogadorPorTag(tagJogador);
         Equipe equipe = pesquisarEquipePeloNome(nomeDaEquipe);
         if (jogador.temEquipe() )
-            throw new Exception("Jogador já tem equipe");
+            throw new JogadorJaTemEquipeException(jogador.getNickName() + " já está em uma equipe");
         if (equipe.estaCheia())
-            throw new Exception("Equipe já está cheia");
+            throw new EquipeCheiaException(equipe + " esta cheia");
         equipe.adicionaJogador(jogador);
         JOptionPane.showMessageDialog(null,"Jogador adicionado a equipe com sucesso");
     }
 
     @Override
-    public void removerDaEquipe(String tagJogador, String nomeDaEquipe) throws Exception {
+    public void removerDaEquipe(String tagJogador, String nomeDaEquipe) throws JogadorNaoTemEquipeException, JogadorNaoEstaNaEquipeException, JogadorNaoEncontradoException, EquipeNaoEncontradaException {
         Jogador jogador = pesquisarJogadorPorTag(tagJogador);
         Equipe equipe = pesquisarEquipePeloNome(nomeDaEquipe);
         if (!jogador.temEquipe())
-            throw new Exception("Este jogador não está em uma equipe");
+            throw new JogadorNaoTemEquipeException(jogador.getNickName() + " não tem equipe");
         if (!equipe.verificaJogador(jogador))
-            throw new Exception("Equipe não tem esse jogador");
+            throw new JogadorNaoEstaNaEquipeException("Jogador não está nesta equipe");
         equipe.removeJogador(jogador);
         JOptionPane.showMessageDialog(null,"Jogador removido com sucesso");
     }
@@ -113,21 +113,21 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         return equipes.values().stream().collect(Collectors.toList());
     }
     @Override
-    public Jogador pesquisarJogadorPorTag(String tag) throws Exception {
+    public Jogador pesquisarJogadorPorTag(String tag) throws JogadorNaoEncontradoException {
         return jogadores.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(tag))
                 .map(Map.Entry::getValue)
                 .findFirst()
-                .orElseThrow(() -> new Exception("Jogador não existe"));
+                .orElseThrow(() -> new JogadorNaoEncontradoException("Jogador não existe"));
     }
 
     @Override
-    public Equipe pesquisarEquipePeloNome(String nomeDaEquipe) throws Exception {
+    public Equipe pesquisarEquipePeloNome(String nomeDaEquipe) throws EquipeNaoEncontradaException {
         return equipes.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(nomeDaEquipe))
                 .map(Map.Entry::getValue)
                 .findFirst()
-                .orElseThrow(() -> new Exception("Equipe não existe"));
+                .orElseThrow(() -> new EquipeNaoEncontradaException("Equipe não existe"));
     }
 
 }

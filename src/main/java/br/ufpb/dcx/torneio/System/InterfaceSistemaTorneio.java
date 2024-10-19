@@ -1,12 +1,10 @@
-package br.ufpb.dcx.torneio.system;
+package br.ufpb.dcx.torneio.System;
 
-import br.ufpb.dcx.torneio.entitie.ELOS;
-import br.ufpb.dcx.torneio.entitie.Equipe;
-import br.ufpb.dcx.torneio.entitie.Jogador;
+import br.ufpb.dcx.torneio.Entities.Equipe;
+import br.ufpb.dcx.torneio.Entities.Jogador;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 
 public interface InterfaceSistemaTorneio {
     /**

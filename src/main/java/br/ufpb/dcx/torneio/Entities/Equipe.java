@@ -1,4 +1,4 @@
-package br.ufpb.dcx.torneio.entitie;
+package br.ufpb.dcx.torneio.Entities;
 
 import java.io.Serializable;
 import java.util.List;

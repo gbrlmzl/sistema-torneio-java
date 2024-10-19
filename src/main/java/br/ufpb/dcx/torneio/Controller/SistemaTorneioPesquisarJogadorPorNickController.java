@@ -1,6 +1,6 @@
 package br.ufpb.dcx.torneio.Controller;
 
-import br.ufpb.dcx.torneio.system.SistemaTorneioLOL;
+import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
