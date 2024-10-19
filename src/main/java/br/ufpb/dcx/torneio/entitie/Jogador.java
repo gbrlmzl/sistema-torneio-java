@@ -108,7 +108,10 @@ public class Jogador implements Serializable {
     }
 
     public String toString(){
-        return "";
+        return "Jogador: " + tagJogador + nickName + "\n"
+                + "ELO: " + elo + "\n"
+                + "Equipe: " + (equipe != null ? equipe : "Não está em uma equipe") + "\n";
     }
+
 
 }

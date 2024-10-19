@@ -82,7 +82,8 @@ public class Equipe implements Serializable {
     }
 
     public String toString(){
-        return """
-                """;
+        return "Nome da equipe: " + nomeDaEquipe + "\n"
+                + "Lista de Jogadores: " + (!listaJogadores.isEmpty() ? listaJogadores : "Não tem jogadores") + "\n"
+                + "Pontuacao: " + (pontuacao != null ? pontuacao : "0") + "\n";
     }
 }

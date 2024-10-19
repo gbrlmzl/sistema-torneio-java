@@ -25,8 +25,8 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
     private final Gravador gravador;
 
     public SistemaTorneioLOL(){
-        this.equipes = new HashMap<>();
-        this.jogadores = new HashMap<>();
+        this.equipes = new TreeMap<>();
+        this.jogadores = new TreeMap<>();
         this.gravador = new Gravador();
     }
 
@@ -67,15 +67,18 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
             throw new NullPointerException("Nenhum jogador cadastrado.");
         }
 
-        return jogadores.values().stream().collect(Collectors.toList());
+        return jogadores.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.comparing(Jogador::getNickName)))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
 
     @Override
     public void criarNovaEquipe(String nomeEquipe) throws Exception {
-        if (!equipes.containsKey(nomeEquipe))
+        if (!equipes.containsKey(nomeEquipe.toUpperCase()))
             throw new NullPointerException("Equipe com este nome já existe");   //Equipe com esse nome já Existe
-        equipes.put(nomeEquipe, new Equipe(nomeEquipe));
+        equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
         JOptionPane.showMessageDialog(null, "Equipe criada " + ANSI_BLUE + nomeEquipe + ANSI_RESET + "com sucesso!");
     }
 
