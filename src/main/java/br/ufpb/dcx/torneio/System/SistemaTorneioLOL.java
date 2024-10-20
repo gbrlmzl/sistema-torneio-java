@@ -91,7 +91,12 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (equipe.estaCheia())
             throw new EquipeCheiaException(equipe + " esta cheia");
         equipe.adicionaJogador(jogador);
+<<<<<<< HEAD
         JOptionPane.showMessageDialog(janelaPrincipal,"Jogador adicionado a equipe com sucesso");
+=======
+        jogador.setEquipe(equipe);
+        JOptionPane.showMessageDialog(null,"Jogador adicionado a equipe com sucesso");
+>>>>>>> 736391e5e0f8f04d1f598a06292ef89a7926530a
     }
 
     @Override
@@ -103,7 +108,12 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (!equipe.verificaJogador(jogador))
             throw new JogadorNaoEstaNaEquipeException("Jogador não está nesta equipe");
         equipe.removeJogador(jogador);
+<<<<<<< HEAD
         JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
+=======
+        jogador.setEquipe(null);
+        JOptionPane.showMessageDialog(null,"Jogador removido com sucesso");
+>>>>>>> 736391e5e0f8f04d1f598a06292ef89a7926530a
     }
 
     @Override
