@@ -1,8 +1,12 @@
 package br.ufpb.dcx.torneio.Entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class TagJogador implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private static int contador = 0;
     private final int id;
 

@@ -12,15 +12,13 @@ import java.util.stream.Collectors;
 
 public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLUE = "\u001B[34m";
 
     private Map<String, Equipe> equipes;
     private Map<String, Jogador> jogadores;
 
     private static final String fileNameEquipes = "equipes.dat";
     private static final String fileNameJogadores = "jogadores.dat";
+    private static final String fileNameContador = "contador.dat";
 
     private final Gravador gravador;
 
@@ -32,14 +30,16 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void iniciarSistema() throws IOException {
-        equipes = gravador.recarregaEquipes(fileNameEquipes, this);
-        jogadores = gravador.recarregaJogador(fileNameJogadores, this);
+        equipes = gravador.recarregaEquipes(fileNameEquipes,this);
+        jogadores = gravador.recarregaJogador(fileNameJogadores,this);
+        gravador.recarregaContador(fileNameContador);
     }
 
     @Override
     public void finalizarSistema() throws IOException {
-        gravador.saveEquipe(equipes, fileNameEquipes,this);
-        gravador.saveJogador(jogadores, fileNameJogadores,this);
+        gravador.saveEquipe(equipes, fileNameEquipes);
+        gravador.saveJogador(jogadores, fileNameJogadores);
+        gravador.saveContador(fileNameContador);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         else if (jogadores.containsValue(jogador))
             throw new JogadorJaExisteException("Jogador já existe");
         jogadores.put(jogador.getTag(), jogador);       //Lembrar de no main fazer a separação dos construtores
-        JOptionPane.showMessageDialog(null, "Jogador" + ANSI_RED + jogador.getTag() + jogador.getNickName() + ANSI_RESET + " cadastrado com sucesso!");
+        JOptionPane.showMessageDialog(null, "Jogador " +  jogador.getTag() + jogador.getNickName() + " cadastrado com sucesso!");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (jogador == null)
             throw new ObjetoNuloException("Jogador nulo");
         jogadores.remove(tag);
-        JOptionPane.showMessageDialog(null, "Jogador " + ANSI_RED + jogador.getTag() + jogador.getNickName() + ANSI_RESET + " removido!");
+        JOptionPane.showMessageDialog(null, "Jogador " + jogador.getTag() + jogador.getNickName() + " removido!");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (!equipes.containsKey(nomeEquipe.toUpperCase()))
             throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
         equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
-        JOptionPane.showMessageDialog(null, "Equipe criada " + ANSI_BLUE + nomeEquipe + ANSI_RESET + "com sucesso!");
+        JOptionPane.showMessageDialog(null, "Equipe criada " + nomeEquipe + "com sucesso!");
     }
 
     @Override
@@ -107,9 +107,9 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
     }
 
     @Override
-    public Collection<Equipe> listaEquipes() throws Exception {
+    public Collection<Equipe> listaEquipes() throws NenhumaEquipeCadastradaException {
         if (equipes.isEmpty())
-            throw new NullPointerException("Nenhum equipe cadastrado.");
+            throw new NenhumaEquipeCadastradaException("Nenhum equipe cadastrado.");
         return equipes.values().stream().collect(Collectors.toList());
     }
     @Override
