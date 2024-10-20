@@ -1,10 +1,13 @@
 package br.ufpb.dcx.torneio.Controller;
 
+import br.ufpb.dcx.torneio.Entities.Jogador;
+import br.ufpb.dcx.torneio.Exception.JogadorNaoEncontradoException;
 import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 public class SistemaTorneioListaJogadoresController implements ActionListener {
     private JFrame janelaPrincipal;
@@ -17,6 +20,16 @@ public class SistemaTorneioListaJogadoresController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae){
+        try {
+            Collection<Jogador> listaJogadores = sistema.listaJogadores();
+            for(Jogador j : listaJogadores){
+                JOptionPane.showMessageDialog(janelaPrincipal, "Nickname: " + j.getNickName() +
+                        "\nELO: " + j.getElo() +
+                        "\nEquipe: " + j.getEquipe());
+            }
+        } catch (JogadorNaoEncontradoException e) {
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Não há jogadores cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 }

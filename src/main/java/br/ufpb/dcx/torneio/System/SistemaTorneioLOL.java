@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
-
+    private JFrame janelaPrincipal;
     private Map<String, Equipe> equipes;
     private Map<String, Jogador> jogadores;
 
@@ -49,7 +49,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         else if (jogadores.containsValue(jogador))
             throw new JogadorJaExisteException("Jogador já existe");
         jogadores.put(jogador.getTag(), jogador);       //Lembrar de no main fazer a separação dos construtores
-        JOptionPane.showMessageDialog(null, "Jogador " +  jogador.getTag() + jogador.getNickName() + " cadastrado com sucesso!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " +  jogador.getTag() + jogador.getNickName() + " cadastrado com sucesso!");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (jogador == null)
             throw new ObjetoNuloException("Jogador nulo");
         jogadores.remove(tag);
-        JOptionPane.showMessageDialog(null, "Jogador " + jogador.getTag() + jogador.getNickName() + " removido!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " + jogador.getTag() + jogador.getNickName() + " removido!");
     }
 
     @Override
@@ -76,10 +76,10 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void criarNovaEquipe(String nomeEquipe) throws EquipeJaExisteException {
-        if (!equipes.containsKey(nomeEquipe.toUpperCase()))
+        if (equipes.containsKey(nomeEquipe.toUpperCase()))
             throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
         equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
-        JOptionPane.showMessageDialog(null, "Equipe criada " + nomeEquipe + "com sucesso!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Equipe criada " + nomeEquipe + " com sucesso!");
     }
 
     @Override
@@ -91,7 +91,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (equipe.estaCheia())
             throw new EquipeCheiaException(equipe + " esta cheia");
         equipe.adicionaJogador(jogador);
-        JOptionPane.showMessageDialog(null,"Jogador adicionado a equipe com sucesso");
+        JOptionPane.showMessageDialog(janelaPrincipal,"Jogador adicionado a equipe com sucesso");
     }
 
     @Override
@@ -103,7 +103,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (!equipe.verificaJogador(jogador))
             throw new JogadorNaoEstaNaEquipeException("Jogador não está nesta equipe");
         equipe.removeJogador(jogador);
-        JOptionPane.showMessageDialog(null,"Jogador removido com sucesso");
+        JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
     }
 
     @Override
@@ -130,4 +130,47 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
                 .orElseThrow(() -> new EquipeNaoEncontradaException("Equipe não existe"));
     }
 
+    @Override
+    public void removerEquipe(String nomeDaEquipe) throws EquipeNaoEncontradaException {
+        try{
+            Equipe equipeRemover = pesquisarEquipePeloNome(nomeDaEquipe);
+            for (Jogador j : equipeRemover.getListaJogadores()){
+                j.setEquipe(null);
+            }
+            this.equipes.remove(equipeRemover);
+        } catch(EquipeNaoEncontradaException e){
+            throw new EquipeNaoEncontradaException("Equipe não existe");
+        }
+    }
+    @Override
+    public List<Jogador> pesquisaJogadoresSemEquipe(){
+        List<Jogador> listaJogadoresSemEquipe = new ArrayList<>();
+        for(Jogador j : jogadores.values()){
+            if(j.getEquipe() == null){
+                listaJogadoresSemEquipe.add(j);
+            }
+        }
+        return listaJogadoresSemEquipe;
+    }
+
+    @Override
+    public List<String> pesquisaNomesJogadoresSemEquipe(){
+        List<String> listaJogadoresSemEquipe = new ArrayList<>();
+        for(Jogador j : jogadores.values()){
+            if(j.getEquipe() == null){
+                listaJogadoresSemEquipe.add(j.getNickName());
+            }
+        }
+        return listaJogadoresSemEquipe;
+    }
+
+    @Override
+    public Jogador pesquisaJogadorPorNickName(String nickName) throws JogadorNaoEncontradoException {
+        for(Jogador j : jogadores.values()){
+            if(j.getNickName().equals(nickName)){
+                return j;
+            }
+        }
+        throw new JogadorNaoEncontradoException("Jogador não existe");
+    }
 }

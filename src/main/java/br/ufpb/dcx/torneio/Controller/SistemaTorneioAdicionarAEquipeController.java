@@ -16,6 +16,8 @@ public class SistemaTorneioAdicionarAEquipeController implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae){
+        String nomeEquipe = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nome da equipe: ");
+
 
     }
 }

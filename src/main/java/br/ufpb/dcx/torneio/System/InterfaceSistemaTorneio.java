@@ -5,6 +5,7 @@ import br.ufpb.dcx.torneio.Entities.Jogador;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public interface InterfaceSistemaTorneio {
     /**
@@ -82,4 +83,30 @@ public interface InterfaceSistemaTorneio {
      * @throws Exception caso a Equipe Não exista
      */
     public Equipe pesquisarEquipePeloNome(String nomeDaEquipe) throws Exception; //especificar exceção
+
+    /**
+     *
+     * @param nomeDaEquipe nome da Equipe
+     * @throws Exception caso a Equipe Não exista
+     */
+    public void removerEquipe(String nomeDaEquipe) throws Exception;
+
+    /**
+     *
+     * @return lista de jogadores que não possuem equipe
+     */
+    public List<Jogador> pesquisaJogadoresSemEquipe();
+
+    /**
+     *
+     * @return lista dos nomes dos jogadores que não possuem equipe
+     */
+    public List<String> pesquisaNomesJogadoresSemEquipe();
+
+    /**
+     * @param nickName nickName do jogador
+     * @return Jogador com nickName
+     * @throws Exception caso o jogador não exista
+     */
+    public Jogador pesquisaJogadorPorNickName(String nickName) throws Exception;
 }

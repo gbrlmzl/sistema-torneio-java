@@ -1,5 +1,7 @@
 package br.ufpb.dcx.torneio.Controller;
 
+import br.ufpb.dcx.torneio.Entities.Jogador;
+import br.ufpb.dcx.torneio.Exception.JogadorNaoEncontradoException;
 import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import javax.swing.*;
@@ -17,6 +19,15 @@ public class SistemaTorneioPesquisarJogadorPorNickController implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent ae){
+        String nickName = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nickname do jogador: ");
+        try {
+            Jogador jogadorPesquisado = sistema.pesquisaJogadorPorNickName(nickName);
+            JOptionPane.showMessageDialog(janelaPrincipal, "Jogador Encontrado! \nNickName: " + jogadorPesquisado.getNickName() +
+                    "\nELO: " + jogadorPesquisado.getElo() +
+                    "\nEquipe: " + jogadorPesquisado.getEquipe());
+        } catch (JogadorNaoEncontradoException e) {
+            JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Jogador não existe", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 }
