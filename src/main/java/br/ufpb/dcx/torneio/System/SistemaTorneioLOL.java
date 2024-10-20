@@ -91,6 +91,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (equipe.estaCheia())
             throw new EquipeCheiaException(equipe + " esta cheia");
         equipe.adicionaJogador(jogador);
+        jogador.setEquipe(equipe);
         JOptionPane.showMessageDialog(null,"Jogador adicionado a equipe com sucesso");
     }
 
@@ -103,6 +104,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (!equipe.verificaJogador(jogador))
             throw new JogadorNaoEstaNaEquipeException("Jogador não está nesta equipe");
         equipe.removeJogador(jogador);
+        jogador.setEquipe(null);
         JOptionPane.showMessageDialog(null,"Jogador removido com sucesso");
     }
 
