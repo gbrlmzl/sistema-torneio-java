@@ -5,13 +5,17 @@ import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 
 public class SistemaTorneioGUI extends JFrame{
 
     SistemaTorneioLOL sistema= new SistemaTorneioLOL();
     JMenuBar barraMenu = new JMenuBar();
 
-    public SistemaTorneioGUI(){
+    public SistemaTorneioGUI() throws IOException {
         setTitle("Torneio");
 
         setSize(1100, 600);
@@ -38,8 +42,10 @@ public class SistemaTorneioGUI extends JFrame{
         JMenu menuJogador = new JMenu("Jogador");
         JMenuItem listaJogadores = new JMenuItem("Listar todos os jogadores");
         JMenuItem pesquisarJogador = new JMenuItem("Pesquisar Jogador");
+        JMenuItem consultarTagJogador = new JMenuItem("Consultar Tag do jogador");
         menuJogador.add(listaJogadores);
         menuJogador.add(pesquisarJogador);
+        menuJogador.add(consultarTagJogador);
 
 
         JMenu menuEquipe = new JMenu("Gerenciamento de equipe");
@@ -61,6 +67,7 @@ public class SistemaTorneioGUI extends JFrame{
 
         listaJogadores.addActionListener(new SistemaTorneioListaJogadoresController(sistema, this));
         pesquisarJogador.addActionListener(new SistemaTorneioPesquisarJogadorPorNickController(sistema, this));
+        consultarTagJogador.addActionListener(new SistemaTorneioConsultarTagController(sistema, this));
 
         adicionarAEquipe.addActionListener(new SistemaTorneioAdicionarAEquipeController(sistema, this));
         removerDaEquipe.addActionListener(new SistemaTorneioRemoverDaEquipeController(sistema, this));
@@ -74,13 +81,35 @@ public class SistemaTorneioGUI extends JFrame{
         barraMenu.add(menuEquipe);
         setJMenuBar(barraMenu);
 
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we){
+                try {
+                    sistema.finalizarSistema();
+                    JOptionPane.showMessageDialog(SistemaTorneioGUI.this, "Os dados foram salvos");
+                    System.exit(0);
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(SistemaTorneioGUI.this, "ERRO: Ocorreu um erro no salvamento dos dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
+                }
+            }
+        });
+
+
+        setVisible(true);
+        try{
+            sistema.iniciarSistema();
+            JOptionPane.showMessageDialog(this, "Os dados foram recuperados");
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(this, "ERRO: Ocorreu um erro durante a recuperação dos dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    public static void main(String[]args){
-        SistemaTorneioGUI sistema = new SistemaTorneioGUI();
-        sistema.setVisible(true);
-        sistema.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static void main(String[]args) throws IOException {
+        SistemaTorneioGUI janela = new SistemaTorneioGUI();
+
     }
 
     

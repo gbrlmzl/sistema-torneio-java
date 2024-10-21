@@ -2,6 +2,7 @@ package br.ufpb.dcx.torneio.System;
 
 import br.ufpb.dcx.torneio.Entities.Equipe;
 import br.ufpb.dcx.torneio.Entities.Jogador;
+import br.ufpb.dcx.torneio.Entities.TagJogador;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -109,4 +110,12 @@ public interface InterfaceSistemaTorneio {
      * @throws Exception caso o jogador não exista
      */
     public Jogador pesquisaJogadorPorNickName(String nickName) throws Exception;
+
+    /**
+     *
+     * @param nickName nickName do jogador
+     * @return String tagJogador do jogador
+     * @throws Exception caso o jogador não exista
+     */
+    public String consultarTagJogador(String nickName) throws Exception;
 }

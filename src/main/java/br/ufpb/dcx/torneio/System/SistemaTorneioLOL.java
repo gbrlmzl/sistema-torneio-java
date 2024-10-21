@@ -1,5 +1,6 @@
 package br.ufpb.dcx.torneio.System;
 
+import br.ufpb.dcx.torneio.Entities.TagJogador;
 import br.ufpb.dcx.torneio.Exception.*;
 import br.ufpb.dcx.torneio.Entities.Equipe;
 import br.ufpb.dcx.torneio.Entities.Jogador;
@@ -49,7 +50,8 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         else if (jogadores.containsValue(jogador))
             throw new JogadorJaExisteException("Jogador já existe");
         jogadores.put(jogador.getTag(), jogador);       //Lembrar de no main fazer a separação dos construtores
-        JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " +  jogador.getTag() + jogador.getNickName() + " cadastrado com sucesso!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Tag do jogador " + jogador.getNickName() + ": " + jogador.getTag() +
+                "\n Jogador cadastrado com sucesso");
     }
 
     @Override
@@ -58,7 +60,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (jogador == null)
             throw new ObjetoNuloException("Jogador nulo");
         jogadores.remove(tag);
-        JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " + jogador.getTag() + jogador.getNickName() + " removido!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " + jogador.getNickName() + " " + jogador.getTag() + " foi removido!");
     }
 
     @Override
@@ -79,7 +81,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (equipes.containsKey(nomeEquipe.toUpperCase()))
             throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
         equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
-        JOptionPane.showMessageDialog(janelaPrincipal, "Equipe criada " + nomeEquipe + " com sucesso!");
+        JOptionPane.showMessageDialog(janelaPrincipal, "Equipe " + nomeEquipe + " criada com sucesso!");
     }
 
     @Override
@@ -107,7 +109,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
 
         jogador.setEquipe(null);
-        JOptionPane.showMessageDialog(null,"Jogador removido com sucesso");
+        JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
     }
 
     @Override
@@ -141,7 +143,8 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
             for (Jogador j : equipeRemover.getListaJogadores()){
                 j.setEquipe(null);
             }
-            this.equipes.remove(equipeRemover);
+            this.equipes.remove(equipeRemover.getNomeDaEquipe(), equipeRemover);
+            JOptionPane.showMessageDialog(janelaPrincipal, "A equipe foi removida");
         } catch(EquipeNaoEncontradaException e){
             throw new EquipeNaoEncontradaException("Equipe não existe");
         }
@@ -176,5 +179,15 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
             }
         }
         throw new JogadorNaoEncontradoException("Jogador não existe");
+    }
+
+    @Override
+    public String consultarTagJogador(String nickName) throws JogadorNaoEncontradoException{
+        try {
+            Jogador jogador = pesquisaJogadorPorNickName(nickName);
+            return jogador.getTag();
+        } catch (JogadorNaoEncontradoException e) {
+            throw new JogadorNaoEncontradoException("Jogador não existe");
+        }
     }
 }

@@ -67,45 +67,30 @@ public class SistemaTorneioCadastrarJogadorController implements ActionListener 
 
         try{
             sistema.cadastrarJogador(jogadorElemento);
-        }catch(JogadorJaExisteException e){
-            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO no cadastro. Esse jogador já existe.","ERRO", JOptionPane.ERROR_MESSAGE);
-        } catch (ObjetoNuloException e) {
-            JOptionPane.showMessageDialog(janelaPrincipal, "ERRO no cadastro. Os dados não foram preenchidos corretamente");
-        }
-        //Possui equipe?
-        int confirmacaoEquipe = JOptionPane.showOptionDialog(janelaPrincipal, jogadorElemento.getNickName() + " já possui Equipe?",null,JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE,null, opcoes, opcoes[1]);
+            //Possui equipe?
+            int confirmacaoEquipe = JOptionPane.showOptionDialog(janelaPrincipal, jogadorElemento.getNickName() + " já possui Equipe?",null,JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE,null, opcoes, opcoes[1]);
 
-        if(confirmacaoEquipe == 0){
+            if(confirmacaoEquipe == 0){
+                String nomeEquipe = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nome da equipe: ");
+                sistema.adicionaJogadorAEquipe(nomeEquipe, jogadorElemento.getTag());
 
-            boolean continuarOperacao = true;
-            while(continuarOperacao){
-                //Nome da equipe
-                String nomeEquipe = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nome da sua equipe:");
-                try{
-                    Equipe equipeJogador = sistema.pesquisarEquipePeloNome(nomeEquipe);
-                    try{
-                        sistema.adicionaJogadorAEquipe(equipeJogador.getNomeDaEquipe(), jogadorElemento.getTag());
-
-                    }catch(EquipeNaoEncontradaException | JogadorNaoEncontradoException | JogadorJaTemEquipeException e){
-                        JOptionPane.showMessageDialog(janelaPrincipal, "Ocorreu um ERRO", "ERRO", JOptionPane.ERROR_MESSAGE);
-
-                    } catch (EquipeCheiaException e) {
-                        JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Essa equipe já está cheia", "ERRO", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } catch(EquipeNaoEncontradaException e){
-                    int confirmacaoContinuarEquipe = JOptionPane.showOptionDialog(janelaPrincipal, "Equipe mencionada não foi encontrada. Deseja tentar novamente?",
-                            "Equipe não encontrada",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.ERROR_MESSAGE,
-                            null,
-                            opcoes, opcoes[1]);
-                    if(confirmacaoContinuarEquipe == 1){
-                        JOptionPane.showMessageDialog(janelaPrincipal, "O jogador não foi inserido na equipe");
-                        return;
-                    }
-                }
+                }else{
+                return;
             }
+
+        }catch(JogadorJaExisteException e){
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Esse jogador já existe.","ERRO", JOptionPane.ERROR_MESSAGE);
+        }catch (ObjetoNuloException e) {
+            JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Os dados não foram preenchidos corretamente","ERRO", JOptionPane.ERROR_MESSAGE);
+        }catch(EquipeNaoEncontradaException e){
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Equipe não existe","ERRO", JOptionPane.ERROR_MESSAGE);
+        }catch(EquipeCheiaException e){
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Equipe já está cheia","ERRO", JOptionPane.ERROR_MESSAGE);
+        }catch(JogadorJaTemEquipeException e){
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Esse jogador já possui equipe","ERRO", JOptionPane.ERROR_MESSAGE);
+        }catch(JogadorNaoEncontradoException e){
+            JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Esse jogador não existe","ERRO", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 }

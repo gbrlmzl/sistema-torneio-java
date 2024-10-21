@@ -39,7 +39,7 @@ public class SistemaTorneioPesquisarEquipePeloNomeController implements ActionLi
 
             } catch (EquipeNaoEncontradaException e) {
                 int continuar = JOptionPane.showOptionDialog(janelaPrincipal, "ERRO: Equipe não está cadastrada. Deseja tentar novamente?",
-                        null,JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,opcoes,opcoes[1]);
+                        "ERRO",JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE,null,opcoes,opcoes[1]);
                 if(continuar == 1){
                     JOptionPane.showMessageDialog(janelaPrincipal,"Pesquisa cancelada");
                     return;
