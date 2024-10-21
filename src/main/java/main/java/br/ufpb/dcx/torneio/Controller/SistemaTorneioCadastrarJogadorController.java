@@ -3,7 +3,7 @@ package main.java.br.ufpb.dcx.torneio.Controller;
 
 import main.java.br.ufpb.dcx.torneio.Entities.ELOS;
 import main.java.br.ufpb.dcx.torneio.Entities.Jogador;
-import br.ufpb.dcx.torneio.Exception.*;
+import main.java.br.ufpb.dcx.torneio.Exception.*;
 import main.java.br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 import main.java.br.ufpb.dcx.torneio.Exception.*;
 
