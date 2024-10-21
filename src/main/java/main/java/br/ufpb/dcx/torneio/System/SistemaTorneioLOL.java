@@ -140,21 +140,13 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void removerEquipe(String nomeDaEquipe) throws EquipeNaoEncontradaException {
-        if(!equipes.containsKey(nomeDaEquipe)){
-            throw new EquipeNaoEncontradaException("Equipe não existe");
-        }
         Equipe equipeRemover = pesquisarEquipePeloNome(nomeDaEquipe);
-
-        equipes.remove(equipeRemover);
-        JOptionPane.showMessageDialog(janelaPrincipal, "Equipe removida com sucesso");
-
-
-        for (Jogador j : equipeRemover.getListaJogadores()) {
+        for (Jogador j: equipeRemover.getListaJogadores())
             j.setEquipe(null);
-
-        }
-
+        equipes.remove(nomeDaEquipe);
+        JOptionPane.showMessageDialog(null,"Equipe removido com sucesso");
     }
+
     @Override
     public List<Jogador> pesquisaJogadoresSemEquipe(){
         List<Jogador> listaJogadoresSemEquipe = new ArrayList<>();

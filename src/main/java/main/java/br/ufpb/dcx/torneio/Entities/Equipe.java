@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class Equipe implements Serializable {
+public class Equipe implements Serializable{
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -97,5 +97,4 @@ public class Equipe implements Serializable {
         }
         return mensagem.toString();
     }
-
 }

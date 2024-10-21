@@ -4,10 +4,12 @@ import main.java.br.ufpb.dcx.torneio.Controller.*;
 import main.java.br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 import main.java.br.ufpb.dcx.torneio.Controller.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 
 public class SistemaTorneioGUI extends JFrame{
@@ -16,6 +18,8 @@ public class SistemaTorneioGUI extends JFrame{
     JMenuBar barraMenu = new JMenuBar();
 
     public SistemaTorneioGUI() throws IOException {
+        String imagemArquivo = "main/java/br/ufpb/dcx/torneio/resources/wallpaper.png";
+
         setTitle("Torneio");
 
         setSize(1100, 600);
@@ -81,7 +85,7 @@ public class SistemaTorneioGUI extends JFrame{
         barraMenu.add(menuEquipe);
         setJMenuBar(barraMenu);
 
-        /*
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
@@ -98,12 +102,10 @@ public class SistemaTorneioGUI extends JFrame{
             }
         });
 
-         */
 
 
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*
+
         try{
             sistema.iniciarSistema();
             JOptionPane.showMessageDialog(this, "Os dados foram recuperados");
@@ -111,7 +113,6 @@ public class SistemaTorneioGUI extends JFrame{
             JOptionPane.showMessageDialog(this, "ERRO: Ocorreu um erro durante a recuperação dos dados", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
 
-         */
     }
 
     public static void main(String[]args) throws IOException {
