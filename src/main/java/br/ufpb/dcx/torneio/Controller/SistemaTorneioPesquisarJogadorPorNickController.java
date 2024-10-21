@@ -22,9 +22,15 @@ public class SistemaTorneioPesquisarJogadorPorNickController implements ActionLi
         String nickName = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nickname do jogador: ");
         try {
             Jogador jogadorPesquisado = sistema.pesquisaJogadorPorNickName(nickName);
-            JOptionPane.showMessageDialog(janelaPrincipal, "Jogador Encontrado! \nNickName: " + jogadorPesquisado.getNickName() +
-                    "\nELO: " + jogadorPesquisado.getElo() +
-                    "\nEquipe: " + jogadorPesquisado.getEquipe());
+            if(jogadorPesquisado.getEquipe() == null) {
+                JOptionPane.showMessageDialog(janelaPrincipal, "Jogador Encontrado! \nNickName: " + jogadorPesquisado.getNickName() +
+                        "\nELO: " + jogadorPesquisado.getElo());
+
+            }else{
+                JOptionPane.showMessageDialog(janelaPrincipal, "Jogador Encontrado! \nNickName: " + jogadorPesquisado.getNickName() +
+                        "\nELO: " + jogadorPesquisado.getElo() +
+                        "\nEquipe: " + jogadorPesquisado.getEquipe().getNomeDaEquipe());
+            }
         } catch (JogadorNaoEncontradoException e) {
             JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Jogador não existe", "ERRO", JOptionPane.ERROR_MESSAGE);
         }

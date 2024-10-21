@@ -23,9 +23,15 @@ public class SistemaTorneioListaJogadoresController implements ActionListener {
         try {
             Collection<Jogador> listaJogadores = sistema.listaJogadores();
             for(Jogador j : listaJogadores){
-                JOptionPane.showMessageDialog(janelaPrincipal, "Nickname: " + j.getNickName() +
-                        "\nELO: " + j.getElo() +
-                        "\nEquipe: " + j.getEquipe());
+                if(j.getEquipe() == null){
+                    JOptionPane.showMessageDialog(janelaPrincipal, "Nickname: " + j.getNickName() +
+                            "\nELO: " + j.getElo());
+                }else{
+                    JOptionPane.showMessageDialog(janelaPrincipal, "Nickname: " + j.getNickName() +
+                            "\nELO: " + j.getElo() +
+                            "\nEquipe: " + j.getEquipe().getNomeDaEquipe());
+
+                }
             }
         } catch (JogadorNaoEncontradoException e) {
             JOptionPane.showMessageDialog(janelaPrincipal,"ERRO: Não há jogadores cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);

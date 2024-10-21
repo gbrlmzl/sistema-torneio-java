@@ -37,7 +37,7 @@ public class SistemaTorneioRemoverEquipeController implements ActionListener {
             }
 
         } catch (EquipeNaoEncontradaException ex) {
-            JOptionPane.showMessageDialog(janelaPrincipal, "Essa equipe não existe");
+            JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Essa equipe não existe", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
 
     }

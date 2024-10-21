@@ -59,6 +59,9 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         Jogador jogador =  jogadores.get(tag);
         if (jogador == null)
             throw new ObjetoNuloException("Jogador nulo");
+        if(jogador.getEquipe() != null){
+            jogador.getEquipe().removeJogador(jogador);
+        }
         jogadores.remove(tag);
         JOptionPane.showMessageDialog(janelaPrincipal, "Jogador " + jogador.getNickName() + " " + jogador.getTag() + " foi removido!");
     }
@@ -78,9 +81,9 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void criarNovaEquipe(String nomeEquipe) throws EquipeJaExisteException {
-        if (equipes.containsKey(nomeEquipe.toUpperCase()))
+        if (equipes.containsKey(nomeEquipe))
             throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
-        equipes.put(nomeEquipe, new Equipe(nomeEquipe.toUpperCase()));
+        equipes.put(nomeEquipe, new Equipe(nomeEquipe));
         JOptionPane.showMessageDialog(janelaPrincipal, "Equipe " + nomeEquipe + " criada com sucesso!");
     }
 
@@ -106,7 +109,6 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
         if (!equipe.verificaJogador(jogador))
             throw new JogadorNaoEstaNaEquipeException("Jogador não está nesta equipe");
         equipe.removeJogador(jogador);
-        JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
 
         jogador.setEquipe(null);
         JOptionPane.showMessageDialog(janelaPrincipal,"Jogador removido com sucesso");
@@ -138,16 +140,20 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void removerEquipe(String nomeDaEquipe) throws EquipeNaoEncontradaException {
-        try{
-            Equipe equipeRemover = pesquisarEquipePeloNome(nomeDaEquipe);
-            for (Jogador j : equipeRemover.getListaJogadores()){
-                j.setEquipe(null);
-            }
-            this.equipes.remove(equipeRemover.getNomeDaEquipe(), equipeRemover);
-            JOptionPane.showMessageDialog(janelaPrincipal, "A equipe foi removida");
-        } catch(EquipeNaoEncontradaException e){
+        if(!equipes.containsKey(nomeDaEquipe)){
             throw new EquipeNaoEncontradaException("Equipe não existe");
         }
+        Equipe equipeRemover = pesquisarEquipePeloNome(nomeDaEquipe);
+
+        equipes.remove(equipeRemover);
+        JOptionPane.showMessageDialog(janelaPrincipal, "Equipe removida com sucesso");
+
+
+        for (Jogador j : equipeRemover.getListaJogadores()) {
+            j.setEquipe(null);
+
+        }
+
     }
     @Override
     public List<Jogador> pesquisaJogadoresSemEquipe(){

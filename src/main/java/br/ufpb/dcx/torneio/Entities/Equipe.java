@@ -22,9 +22,9 @@ public class Equipe implements Serializable {
         this.pontuacao = 0;
     }
 
-    public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores){
+    public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores) {
         this.nomeDaEquipe = nomeDaEquipe;
-        this.listaJogadores= listaJogadores;
+        this.listaJogadores = listaJogadores;
         this.pontuacao = 0;
     }
 
@@ -71,26 +71,31 @@ public class Equipe implements Serializable {
         this.pontuacao = pontuacao;
     }
 
-    public boolean estaCheia(){
+    public boolean estaCheia() {
         return listaJogadores.size() == 5;
     }
 
 
-    public void adicionaJogador(Jogador jogador){
+    public void adicionaJogador(Jogador jogador) {
         this.listaJogadores.add(jogador);
     }
 
-    public void removeJogador(Jogador jogador){
+    public void removeJogador(Jogador jogador) {
         this.listaJogadores.remove(jogador);
     }
 
-    public boolean verificaJogador(Jogador jogador){
+    public boolean verificaJogador(Jogador jogador) {
         return listaJogadores.contains(jogador);
     }
 
-    public String toString(){
-        return "Nome da equipe: " + nomeDaEquipe + "\n"
-                + "Lista de Jogadores: " + (!listaJogadores.isEmpty() ? listaJogadores : "Não tem jogadores") + "\n"
-                + "Pontuacao: " + (pontuacao != null ? pontuacao : "0") + "\n";
+    @Override
+    public String toString() {
+        StringBuilder mensagem = new StringBuilder(
+                "Equipe: " + getNomeDaEquipe() + "\nJogadores:\n");
+        for (Jogador jogador : getListaJogadores()) {
+            mensagem.append("- ").append(jogador.getNickName()).append("\n");
+        }
+        return mensagem.toString();
     }
+
 }

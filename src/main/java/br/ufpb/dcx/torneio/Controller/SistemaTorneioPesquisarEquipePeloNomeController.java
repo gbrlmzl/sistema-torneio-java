@@ -28,13 +28,7 @@ public class SistemaTorneioPesquisarEquipePeloNomeController implements ActionLi
         String nomeEquipe = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nome da equipe: ");
             try {
                 Equipe equipePesquisada = sistema.pesquisarEquipePeloNome(nomeEquipe);
-                StringBuilder mensagem = new StringBuilder(
-                        "Equipe: " + equipePesquisada.getNomeDaEquipe() + "\nJogadores:\n");
-                for(Jogador jogador : equipePesquisada.getListaJogadores()){
-                    mensagem.append("- ").append(jogador.getNickName()).append("\n");
-
-                }
-                JOptionPane.showMessageDialog(janelaPrincipal,"Equipe encontrada!\n" + mensagem.toString());
+                JOptionPane.showMessageDialog(janelaPrincipal,"Equipe encontrada!\n" + equipePesquisada.toString());
                 return;
 
             } catch (EquipeNaoEncontradaException e) {

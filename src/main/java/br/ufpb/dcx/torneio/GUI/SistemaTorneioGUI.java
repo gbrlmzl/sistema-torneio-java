@@ -81,6 +81,7 @@ public class SistemaTorneioGUI extends JFrame{
         barraMenu.add(menuEquipe);
         setJMenuBar(barraMenu);
 
+        /*
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
@@ -97,14 +98,20 @@ public class SistemaTorneioGUI extends JFrame{
             }
         });
 
+         */
+
 
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*
         try{
             sistema.iniciarSistema();
             JOptionPane.showMessageDialog(this, "Os dados foram recuperados");
         }catch(IOException e){
             JOptionPane.showMessageDialog(this, "ERRO: Ocorreu um erro durante a recuperação dos dados", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+
+         */
     }
 
     public static void main(String[]args) throws IOException {
