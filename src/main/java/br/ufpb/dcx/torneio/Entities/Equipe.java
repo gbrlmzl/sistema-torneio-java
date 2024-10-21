@@ -2,6 +2,7 @@ package br.ufpb.dcx.torneio.Entities;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,8 @@ public class Equipe implements Serializable {
 
     public Equipe(String nomeDaEquipe) {
         this.nomeDaEquipe = nomeDaEquipe;
+        this.listaJogadores = new ArrayList<>();
+        this.pontuacao = 0;
     }
 
     public Equipe(String nomeDaEquipe, List<Jogador> listaJogadores){
@@ -71,6 +74,7 @@ public class Equipe implements Serializable {
     public boolean estaCheia(){
         return listaJogadores.size() == 5;
     }
+
 
     public void adicionaJogador(Jogador jogador){
         this.listaJogadores.add(jogador);

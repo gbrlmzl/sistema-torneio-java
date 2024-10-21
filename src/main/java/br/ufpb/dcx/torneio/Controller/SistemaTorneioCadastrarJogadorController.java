@@ -28,7 +28,7 @@ public class SistemaTorneioCadastrarJogadorController implements ActionListener 
         String[] opcoes = {"Sim", "Não"};
 
         //NickName do jogador
-        String nickNameJogador = JOptionPane.showInputDialog(janelaPrincipal,"Digite seu NickName:", JOptionPane.PLAIN_MESSAGE);
+        String nickNameJogador = JOptionPane.showInputDialog(janelaPrincipal,"Digite seu NickName:");
 
 
         //Elo do jogador

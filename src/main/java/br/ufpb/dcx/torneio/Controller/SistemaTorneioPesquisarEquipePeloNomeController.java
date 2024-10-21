@@ -1,6 +1,7 @@
 package br.ufpb.dcx.torneio.Controller;
 
 import br.ufpb.dcx.torneio.Entities.Equipe;
+import br.ufpb.dcx.torneio.Entities.Jogador;
 import br.ufpb.dcx.torneio.Exception.EquipeNaoEncontradaException;
 import br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
@@ -27,9 +28,14 @@ public class SistemaTorneioPesquisarEquipePeloNomeController implements ActionLi
         String nomeEquipe = JOptionPane.showInputDialog(janelaPrincipal, "Digite o nome da equipe: ");
             try {
                 Equipe equipePesquisada = sistema.pesquisarEquipePeloNome(nomeEquipe);
-                JOptionPane.showMessageDialog(janelaPrincipal,"Equipe encontrada! \nNome da equipe: " + equipePesquisada.getNomeDaEquipe() +
-                        "\nJogadores: " + equipePesquisada.getListaJogadores() +
-                        "\nPontuação: " + equipePesquisada.getPontuacao());
+                StringBuilder mensagem = new StringBuilder(
+                        "Equipe: " + equipePesquisada.getNomeDaEquipe() + "\nJogadores:\n");
+                for(Jogador jogador : equipePesquisada.getListaJogadores()){
+                    mensagem.append("- ").append(jogador.getNickName()).append("\n");
+
+                }
+                JOptionPane.showMessageDialog(janelaPrincipal,"Equipe encontrada!\n" + mensagem.toString());
+                return;
 
             } catch (EquipeNaoEncontradaException e) {
                 int continuar = JOptionPane.showOptionDialog(janelaPrincipal, "ERRO: Equipe não está cadastrada. Deseja tentar novamente?",

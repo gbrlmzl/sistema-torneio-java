@@ -1,5 +1,6 @@
 package br.ufpb.dcx.torneio.Controller;
 
+import br.ufpb.dcx.torneio.Entities.ELOS;
 import br.ufpb.dcx.torneio.Entities.Equipe;
 import br.ufpb.dcx.torneio.Entities.Jogador;
 import br.ufpb.dcx.torneio.Exception.NenhumaEquipeCadastradaException;
@@ -26,12 +27,14 @@ public class SistemaTorneioListaEquipesController implements ActionListener {
         try {
             Collection<Equipe> todasEquipes = sistema.listaEquipes();
             for(Equipe e : todasEquipes){
-
-                JOptionPane.showMessageDialog(janelaPrincipal,"Nome da equipe: " + e.getNomeDaEquipe() +
-                        "\nJogadores: " + e.getListaJogadores() + //TODO
-                        "\nPontuação: " + e.getPontuacao());      //TODO
-
+                StringBuilder mensagem = new StringBuilder(
+                        "Equipe: " + e.getNomeDaEquipe() + "\nJogadores:\n");
+                for(Jogador jogador : e.getListaJogadores()){
+                    mensagem.append("- ").append(jogador.getNickName()).append("\n");
+                }
+                JOptionPane.showMessageDialog(janelaPrincipal,"Equipe encontrada!\n" + mensagem.toString());
             }
+
         } catch (NenhumaEquipeCadastradaException ex) {
             JOptionPane.showMessageDialog(janelaPrincipal, "ERRO: Nenhuma equipe foi cadastrada", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
