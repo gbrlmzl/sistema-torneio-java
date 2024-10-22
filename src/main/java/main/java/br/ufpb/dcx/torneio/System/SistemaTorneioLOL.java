@@ -45,7 +45,7 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
     @Override
     public void cadastrarJogador(Jogador jogador) throws JogadorJaExisteException, ObjetoNuloException {
-        if (jogador == null)
+        if (jogador == null || jogador.getNickName() == null || jogador.getNickName().isEmpty() || jogador.getElo() == null)
             throw new ObjetoNuloException("Jogador nulo");
         else if (jogadores.containsValue(jogador))
             throw new JogadorJaExisteException("Jogador já existe");
@@ -80,9 +80,11 @@ public class SistemaTorneioLOL implements InterfaceSistemaTorneio{
 
 
     @Override
-    public void criarNovaEquipe(String nomeEquipe) throws EquipeJaExisteException {
+    public void criarNovaEquipe(String nomeEquipe) throws EquipeJaExisteException, ObjetoNuloException {
+        if(nomeEquipe == null || nomeEquipe.isEmpty()) throw new ObjetoNuloException("Formato de nome de equipe inválido!");
         if (equipes.containsKey(nomeEquipe))
             throw new EquipeJaExisteException("Uma equipe já existe com esse nome");   //Equipe com esse nome já Existe
+
         equipes.put(nomeEquipe, new Equipe(nomeEquipe));
         JOptionPane.showMessageDialog(janelaPrincipal, "Equipe " + nomeEquipe + " criada com sucesso!");
     }
