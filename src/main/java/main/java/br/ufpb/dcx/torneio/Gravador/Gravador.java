@@ -7,6 +7,7 @@ import main.java.br.ufpb.dcx.torneio.System.SistemaTorneioLOL;
 
 import java.io.*;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Gravador {
 
@@ -24,7 +25,7 @@ public class Gravador {
             Map<String, Jogador> map = (Map<String, Jogador>) ois.readObject();
             return map;
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Erro ao recarregar jogadores: " + e.getMessage(), e);
+            return new TreeMap<String, Jogador>();
         }
     }
 
@@ -38,10 +39,11 @@ public class Gravador {
 
     @SuppressWarnings("unchecked")
     public Map<String, Equipe> recarregaEquipes(String fileName, SistemaTorneioLOL sistema) {
+        Map<String, Equipe> mapa = new TreeMap<>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             return (Map<String, Equipe>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Erro ao recarregar equipes: " + e.getMessage(), e);
+            return mapa;
         }
     }
 
@@ -58,7 +60,7 @@ public class Gravador {
             int contador = dis.readInt();
             TagJogador.setContador(contador);
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao recarregar contador: " + e.getMessage(), e);
+            TagJogador.setContador(0);
         }
     }
 }
